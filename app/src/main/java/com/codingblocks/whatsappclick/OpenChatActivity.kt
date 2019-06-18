@@ -9,34 +9,43 @@ import androidx.appcompat.app.AppCompatActivity
 class OpenChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var number: String = ""
         super.onCreate(savedInstanceState)
-        if (intent.action == Intent.ACTION_PROCESS_TEXT) {
-            val number = intent
-                .getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT).toString()
-            if (isNumber(number)) {
-                startWhatsApp(number)
-            } else {
-                Toast.makeText(this, "Please Check The Number", Toast.LENGTH_SHORT).show()
-                finish()
-            }
+        if (intent.action == Intent.ACTION_PROCESS_TEXT) number =
+            intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT).toString()
+        else if (intent.action == Intent.ACTION_DIAL || intent.action == Intent.ACTION_VIEW)
+            number = intent?.data?.schemeSpecificPart.toString()
+
+
+        if (isNumber(number)) {
+            startWhatsApp(number)
+        } else {
+            Toast.makeText(this, "Please Check The Number", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
+
 
     private fun startWhatsApp(number: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setPackage("com.whatsapp")
-        val data :String = if(number[0] == '+') {
+        val data: String = if (number[0] == '+') {
             number.substring(1)
-        }else{
+        } else {
             number
         }
-        intent.data = Uri.parse("https://wa.me/$data")
-        intent.setPackage("com.whatsapp")
-        if (packageManager.resolveActivity(intent, 0) != null) {
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, "Please install whatsApp", Toast.LENGTH_SHORT).show()
+        if (number.length == 10)
+            Toast.makeText(this, "Please Add Country Code", Toast.LENGTH_LONG).show()
+        else {
+            intent.data = Uri.parse("https://wa.me/$data")
+            intent.setPackage("com.whatsapp")
+            if (packageManager.resolveActivity(intent, 0) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Please install whatsApp", Toast.LENGTH_SHORT).show()
+            }
         }
+        finish()
     }
 
     private fun isNumber(number: String): Boolean {
