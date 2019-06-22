@@ -1,4 +1,4 @@
-package com.codingblocks.whatsappclick
+package com.codingblocks.whatsappopener
 
 import android.content.Intent
 import android.net.Uri
@@ -8,8 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 
 class OpenChatActivity : AppCompatActivity() {
 
+    companion object {
+        fun isNumber(number: String): Boolean {
+            val regex =
+                Regex("^(?:(?:\\+|0{0,2})[0-9]|[0-9][0-9](\\s*[\\-]\\s*)?|[0]?)?[1-9]\\d{9}$")
+            return regex.matches(number)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        var number: String = ""
+        var number = ""
         super.onCreate(savedInstanceState)
         if (intent.action == Intent.ACTION_PROCESS_TEXT) number =
             intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT).toString()
@@ -48,8 +56,5 @@ class OpenChatActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun isNumber(number: String): Boolean {
-        val regex = Regex("^(?:(?:\\+|0{0,2})[0-9]|[0-9][0-9](\\s*[\\-]\\s*)?|[0]?)?[1-9]\\d{9}$")
-        return regex.matches(number)
-    }
+
 }

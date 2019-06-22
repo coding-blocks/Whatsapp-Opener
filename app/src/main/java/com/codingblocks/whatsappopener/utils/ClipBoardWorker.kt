@@ -1,4 +1,4 @@
-package com.codingblocks.whatsappclick.utils
+package com.codingblocks.whatsappopener.utils
 
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -10,7 +10,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import java.util.concurrent.TimeUnit
 
-class ClipBoardWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
+class ClipBoardWorker(val context: Context, params: WorkerParameters) : Worker(context, params) {
 
     companion object {
         private const val NAME_WORK_ONE_TIME_CLIPB_WORKER =
@@ -43,6 +43,7 @@ class ClipBoardWorker(context: Context, params: WorkerParameters) : Worker(conte
 
     override fun doWork(): Result {
 
+        NumberNotificationManager.getInstance(context).startListener()
         scheduleOneTimeWork()
         schedulePeriodicWork()
 

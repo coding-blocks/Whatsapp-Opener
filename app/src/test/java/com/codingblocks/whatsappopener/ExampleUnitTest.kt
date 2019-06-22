@@ -1,4 +1,4 @@
-package com.codingblocks.whatsappclick
+package com.codingblocks.whatsappopener
 
 import org.junit.Test
 

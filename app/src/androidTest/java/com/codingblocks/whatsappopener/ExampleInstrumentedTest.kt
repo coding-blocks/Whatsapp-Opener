@@ -1,4 +1,4 @@
-package com.codingblocks.whatsappclick
+package com.codingblocks.whatsappopener
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.codingblocks.whatsappclick", appContext.packageName)
+        assertEquals("com.codingblocks.whatsappopener", appContext.packageName)
     }
 }
